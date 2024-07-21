@@ -1,0 +1,7 @@
+[submodule "lvgl"]
+	path = components/lvgl
+	url = https://github.com/lvgl/lvgl
+[submodule "components/lvgl_esp32_drivers"]
+	path = components/lvgl_esp32_drivers
+	url = https://github.com/hiruna/lvgl_esp32_drivers
+	branch = develop/lvgl_8.3.7_idf_5.2
