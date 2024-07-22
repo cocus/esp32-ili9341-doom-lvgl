@@ -86,7 +86,9 @@ static void create_demo_application(void) {
 #else
     /* Otherwise we show the selected demo */
 #if defined CONFIG_LV_USE_DEMO_WIDGETS
-    lv_demo_widgets();
+        lv_demo_music();
+
+//    lv_demo_widgets();
 #elif defined CONFIG_LV_USE_DEMO_KEYPAD_AND_ENCODER
     lv_demo_keypad_encoder();
 #elif defined CONFIG_LV_USE_DEMO_BENCHMARK
@@ -94,7 +96,6 @@ static void create_demo_application(void) {
 #elif defined CONFIG_LV_USE_DEMO_STRESS
         lv_demo_stress();
 #elif defined CONFIG_LV_USE_DEMO_MUSIC
-        lv_demo_music();
 #else
 #error "No demo application selected."
 #endif
