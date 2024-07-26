@@ -1,4 +1,42 @@
 
+// #define DOOM
+
+#ifdef DOOM
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+
+#undef false
+#undef true
+#include "i_system.h"
+#include "spi_lcd.h"
+
+#include "esp_task_wdt.h"
+#include "esp_log.h"
+
+void doom_task(void *pvParameters)
+{
+    char const *argv[] = {
+        "doom", "-cout", "ICWEFDA"
+    };
+    ESP_LOGI("main", "Now calling doom_main()");
+
+    doom_main(sizeof(argv)/sizeof(argv[0]), argv);
+    while(1)
+    {
+        vTaskDelete(NULL);
+    }
+}
+
+void app_main()
+{
+    // no need for you, sucker!
+    esp_task_wdt_deinit();
+    spi_lcd_init();
+
+    xTaskCreatePinnedToCore(&doom_task, "doom", 22480, NULL, 5, NULL, 0);
+}
+#else
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -261,10 +299,9 @@ static void guiTask(void *pvParameter) {
 
 void app_main()
 {
-    ESP_LOGI(TAG, "ASDASDA");
-
     /* If you want to use a task to create the graphic, you NEED to create a Pinned task
      * Otherwise there can be problem such as memory corruption and so on.
      * NOTE: When not using Wi-Fi nor Bluetooth you can pin the guiTask to core 0 */
     xTaskCreatePinnedToCore(guiTask, "gui", 4096 * 5, NULL, 0, NULL, 1);
 }
+#endif
